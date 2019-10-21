@@ -1,7 +1,8 @@
 // Update with your config settings.
 
 const productionConnection =
-  process.env.DATABASE_URL || "postgres://localhost/postgres";
+  process.env.DATABASE_URL ||
+  `postgres://localhost/connorholly/nutrition-tracker`;
 module.exports = {
   development: {
     client: "sqlite3",
@@ -14,12 +15,12 @@ module.exports = {
     },
     seeds: {
       directory: "./data/seeds"
-    },
-    pool: {
-      afterCreate: (conn, done) => {
-        conn.run("PRAGMA foreign_keys = ON", done);
-      }
     }
+    // pool: {
+    //   afterCreate: (conn, done) => {
+    //     conn.run("PRAGMA foreign_keys = ON", done);
+    //   }
+    // }
   },
   production: {
     client: "pg",
@@ -32,7 +33,7 @@ module.exports = {
     },
     pool: {
       min: 2,
-      max: 100
+      max: 10
     }
   }
 };
