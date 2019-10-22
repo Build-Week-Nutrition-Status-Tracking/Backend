@@ -52,18 +52,15 @@ router.post("/login", (req, res) => {
 });
 
 //WILL NEED AUTHENTICATION MIDDLEWARE FOR THESE
-router.get("/", mw.tokenVerify, (req, res) => {
-  // console.log(mw.tokenVerify)
-  // console.log(mw.adminVerify)
+router.get("/", mw.tokenVerify, mw.adminVerify, (req, res) => {
   db.getUsers()
     .then(users => {
-      console.log("users", users);
       res.status(200).json({
-        loggedInUser: users.username,
-        admin: users.admin,
-        country_id: users.country_id,
+        loggedInUser: req.user.username,
+        admin: req.user.admin,
+        country_id: req.user.country_id,
         users: users,
-        message: `here are the users, ${users.username}!`
+        message: `here are the users, ${req.user.username}!`
       });
     })
     .catch(error => {
@@ -106,7 +103,7 @@ router.put("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
 });
 
 function generateToken(user) {
-  console.log("users", user);
+  console.log("user", user);
   payload = {
     sub: user.id,
     username: user.username,
