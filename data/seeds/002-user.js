@@ -17,7 +17,7 @@ exports.seed = function(knex) {
           admin: true,
           user_country_id: 2
         },
-        { username: "Lynn", password: "pass", admin: true, user_country_id: 2 }
+        { username: "Lynn", password: "pass", admin: false, user_country_id: 2 }
       ]);
     });
 };

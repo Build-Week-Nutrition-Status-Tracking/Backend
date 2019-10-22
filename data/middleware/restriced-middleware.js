@@ -20,6 +20,7 @@ function tokenVerify(req, res, next) {
           admin: decodedToken.admin,
           country_id: decodedToken.country_id
         };
+        console.log("req.user", req.user);
         next();
       }
     });
@@ -28,6 +29,32 @@ function tokenVerify(req, res, next) {
   }
 }
 
-function adminVerify(req, res, next) {}
+function adminVerify(req, res, next) {
+  console.log(req.user, "req.user");
+  if (req.user.admin === true) {
+    next();
+  } else {
+    res.status(401).json("only admins have access");
+  }
+}
+
+// function adminVerify(req, res, next) {
+//   if (req.user) {
+//     jwt.verify((err, decodedToken) => {
+//       if (err) {
+//         res.status(401).json({ message: "invalid" });
+//       } else {
+//         req.user = {
+//           admin: decodedToken.admin
+//         };
+//         if (admin === true) {
+//           next();
+//         }
+//       }
+//     });
+//   } else {
+//     res.status(401).json("only admins have access");
+//   }
+// }
 
 function userCountryVerify(req, res, next) {}
