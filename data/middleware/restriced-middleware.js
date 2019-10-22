@@ -20,7 +20,6 @@ function tokenVerify(req, res, next) {
           admin: decodedToken.admin,
           country_id: decodedToken.country_id
         };
-        // console.log("req.user", req.user);
         next();
       }
     });
@@ -30,7 +29,6 @@ function tokenVerify(req, res, next) {
 }
 
 function adminVerify(req, res, next) {
-  console.log(req.user, "req.user");
   if (req.user.admin === 1) {
     next();
   } else {

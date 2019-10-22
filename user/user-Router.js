@@ -90,6 +90,8 @@ router.put("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
   const id = req.params.id;
   const changes = req.body;
 
+  console.log(id, changes);
+
   db.editUser(id, changes)
     .then(updatedUser => {
       res.status(200).json(updatedUser);
