@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const secrets = require("../config/secrets");
+const mw = require("../data/middleware/restriced-middleware");
 
 const db = require("./user-Model");
 
@@ -49,10 +50,16 @@ router.post("/login", (req, res) => {
 });
 
 //WILL NEED AUTHENTICATION MIDDLEWARE FOR THESE
-router.get("/", (req, res) => {
+router.get("/", mw.tokenVerify, (req, res) => {
   db.getUsers()
     .then(users => {
-      res.status(200).json(users);
+      res.status(200).json({
+        users: users,
+        username: req.user.username,
+        admin: req.user.admin,
+        country_id: req.user.country_id,
+        message: "here are the users!"
+      });
     })
     .catch(error => {
       res.status(500).json({
@@ -62,7 +69,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get("/:id", mw.tokenVerify, (req, res) => {
   const id = req.params.id;
 
   db.getUserById(id)
