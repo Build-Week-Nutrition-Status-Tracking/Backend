@@ -91,7 +91,8 @@ router.put("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
   const id = req.params.id;
   const changes = req.body;
 
-  console.log(id, changes);
+  console.log(id, req.body);
+  console.log(username);
 
   db.editUser(id, changes)
     .then(updatedUser => {
