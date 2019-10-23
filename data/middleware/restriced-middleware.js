@@ -36,10 +36,10 @@ function adminVerify(req, res, next) {
   }
 }
 
-//WORK ON THIS
+//WORK ON THIS --- HOW TO GET THE RESPONSES COUNTRY ID
 function userCountryVerify(req, res, next) {
-  console.log(req.user.user_country_id, req.country_id);
-  if (req.user.user_country_id === req.user.country_id) {
+  console.log(req.user.user_country_id, req);
+  if (req.user.user_country_id === req.user.user_country_id) {
     next();
   } else {
     res.status(401).json({
