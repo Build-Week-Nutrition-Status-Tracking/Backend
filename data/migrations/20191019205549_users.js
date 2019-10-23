@@ -24,7 +24,9 @@ exports.up = function(knex) {
           .integer("user_country_id")
           .unsigned()
           .references("id")
-          .inTable("country");
+          .inTable("country")
+          .onDelete("CASCADE")
+          .onUpdate("CASCADE");
       })
       //COMMUNITY TABLE
       .createTable("community", tbl => {
@@ -38,7 +40,9 @@ exports.up = function(knex) {
           .integer("country_id")
           .unsigned()
           .references("id")
-          .inTable("country");
+          .inTable("country")
+          .onDelete("CASCADE")
+          .onUpdate("CASCADE");
       })
       //CHILDREN TABLE
       .createTable("kids", tbl => {
@@ -48,12 +52,16 @@ exports.up = function(knex) {
           .integer("community_id")
           .unsigned()
           .references("id")
-          .inTable("community");
+          .inTable("community")
+          .onDelete("CASCADE")
+          .onUpdate("CASCADE");
         tbl
           .integer("country_id")
           .unsigned()
           .references("id")
-          .inTable("country");
+          .inTable("country")
+          .onDelete("CASCADE")
+          .onUpdate("CASCADE");
         tbl.string("child_name").notNullable();
         tbl.string("parent_name").notNullable();
         tbl.text("contact_info").notNullable();
