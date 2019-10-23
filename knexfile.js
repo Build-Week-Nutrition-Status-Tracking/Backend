@@ -4,6 +4,10 @@
 //   process.env.DATABASE_URL ||
 //   `postgres://localhost/connorholly/nutrition-tracker`;
 
+require("dotenv").config();
+const pg = require("pg");
+pg.defaults.ssl = true;
+
 module.exports = {
   development: {
     client: "sqlite3",
@@ -37,7 +41,7 @@ module.exports = {
     }
   },
   production: {
-    client: "pg",
+    client: "sqlite3",
     connection: process.env.DATABASE_URL,
     migrations: {
       directory: "./data/migrations"
