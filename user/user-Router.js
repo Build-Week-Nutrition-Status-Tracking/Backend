@@ -33,7 +33,7 @@ router.post("/register", (req, res) => {
 
 //work on login
 router.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, admin } = req.body;
 
   db.findByUsername({ username })
     .first()
