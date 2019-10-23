@@ -58,9 +58,9 @@ router.get("/", mw.tokenVerify, mw.adminVerify, (req, res) => {
       res.status(200).json({
         loggedInUser: req.user.username,
         admin: req.user.admin,
-        country_id: req.user.country_id,
-        users: users,
-        message: `here are the users, ${req.user.username}!`
+        user_country_id: req.user.user_country_id,
+        message: `here are the users, ${req.user.username}!`,
+        users: users
       });
     })
     .catch(error => {
@@ -86,6 +86,7 @@ router.get("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
     });
 });
 
+//---------------------- WORK ON THIS ---------------
 router.put("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
   const id = req.params.id;
   const changes = req.body;
@@ -105,15 +106,13 @@ router.put("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
 });
 
 function generateToken(user) {
-  console.log("user", user);
   payload = {
     sub: user.id,
     username: user.username,
     admin: user.admin,
-    country_id: user.country_id
+    user_country_id: user.user_country_id
   };
-  // payload = { user };
-  console.log("payload", payload);
+  console.log(payload);
 
   options = {
     expiresIn: "1h"

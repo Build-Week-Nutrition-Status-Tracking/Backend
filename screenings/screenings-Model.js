@@ -10,7 +10,8 @@ module.exports = {
   getKid,
   addCountry,
   addCommunity,
-  addKid
+  addKid,
+  deleteKid
 };
 
 function getCountries() {
@@ -70,4 +71,10 @@ function addCommunity(newCommunity) {
 
 function addKid(newKid) {
   return db("kids").insert(newKid);
+}
+
+function deleteKid(id) {
+  return db("kids")
+    .where("id", "=", id)
+    .del();
 }

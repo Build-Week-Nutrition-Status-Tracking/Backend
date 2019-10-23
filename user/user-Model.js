@@ -17,9 +17,9 @@ function getUserById(id) {
 }
 
 function editUser(id, changes) {
-  return db("users")
-    .update(changes)
-    .where("id", "=", id);
+  return db("user")
+    .where({ id })
+    .update(changes);
 }
 
 function addUser(newUser) {

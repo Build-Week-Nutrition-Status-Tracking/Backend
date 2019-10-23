@@ -18,7 +18,7 @@ function tokenVerify(req, res, next) {
         req.user = {
           username: decodedToken.username,
           admin: decodedToken.admin,
-          country_id: decodedToken.country_id
+          user_country_id: decodedToken.user_country_id
         };
         next();
       }
@@ -32,27 +32,18 @@ function adminVerify(req, res, next) {
   if (req.user.admin === 1) {
     next();
   } else {
-    res.status(401).json("only admins have access");
+    res.status(401).json({ message: "only admins have access" });
   }
 }
 
-// function adminVerify(req, res, next) {
-//   if (req.user) {
-//     jwt.verify((err, decodedToken) => {
-//       if (err) {
-//         res.status(401).json({ message: "invalid" });
-//       } else {
-//         req.user = {
-//           admin: decodedToken.admin
-//         };
-//         if (admin === true) {
-//           next();
-//         }
-//       }
-//     });
-//   } else {
-//     res.status(401).json("only admins have access");
-//   }
-// }
-
-function userCountryVerify(req, res, next) {}
+//WORK ON THIS
+function userCountryVerify(req, res, next) {
+  console.log(req.user.user_country_id, req.country_id);
+  if (req.user.user_country_id === req.user.country_id) {
+    next();
+  } else {
+    res.status(401).json({
+      message: "You do not have access to making changes in this country "
+    });
+  }
+}

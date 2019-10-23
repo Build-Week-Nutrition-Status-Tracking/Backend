@@ -23,7 +23,7 @@ router.get("/country", mw.tokenVerify, (req, res) => {
 });
 
 //ADD COUNTRY
-router.post("/country", mw.tokenVerify, (req, res) => {
+router.post("/country", mw.tokenVerify, mw.adminVerify, (req, res) => {
   const newCountry = req.body;
 
   db.addCountry(newCountry)
@@ -71,20 +71,25 @@ router.get("/country/:id/communities", mw.tokenVerify, (req, res) => {
 });
 
 //POST COMMUNITIES OF A COUNTRY (STILL HAVE TO PUT IN COUNTRY_ID)
-router.post("/country/:id/communities", mw.tokenVerify, (req, res) => {
-  const newCommunity = req.body;
+router.post(
+  "/country/:id/communities",
+  mw.tokenVerify,
+  mw.adminVerify,
+  (req, res) => {
+    const newCommunity = req.body;
 
-  db.addCommunity(newCommunity)
-    .then(communities => {
-      res.status(200).json(communities);
-    })
-    .catch(error => {
-      res.status(500).json({
-        error: error,
-        message: "There was a 500 server error while posting communities"
+    db.addCommunity(newCommunity)
+      .then(communities => {
+        res.status(200).json(communities);
+      })
+      .catch(error => {
+        res.status(500).json({
+          error: error,
+          message: "There was a 500 server error while posting communities"
+        });
       });
-    });
-});
+  }
+);
 
 //GET SPECIFIC COMMUNITY (PUT IN COUNTRY_ID)
 router.get("/communities/:id", mw.tokenVerify, (req, res) => {
@@ -103,36 +108,46 @@ router.get("/communities/:id", mw.tokenVerify, (req, res) => {
 });
 
 //GET KIDS FOR SPECIFIC COMMUNITY
-router.get("/communities/:id/kids", mw.tokenVerify, (req, res) => {
-  const id = req.params.id;
+router.get(
+  "/communities/:id/kids",
+  mw.tokenVerify,
+  mw.userCountryVerify,
+  (req, res) => {
+    const id = req.params.id;
 
-  db.getKids(id)
-    .then(kids => {
-      res.status(200).json(kids);
-    })
-    .catch(error => {
-      res.status(500).json({
-        error: error,
-        message: "There was a 500 server error while getting kids"
+    db.getKids(id)
+      .then(kids => {
+        res.status(200).json(kids);
+      })
+      .catch(error => {
+        res.status(500).json({
+          error: error,
+          message: "There was a 500 server error while getting kids"
+        });
       });
-    });
-});
+  }
+);
 
 //POSTING A NEW KID (HAVE TO ADD COUNTRY_ID AND COMMUNITY_ID)
-router.post("/communities/:id/kids", mw.tokenVerify, (req, res) => {
-  const newKid = req.body;
+router.post(
+  "/communities/:id/kids",
+  mw.tokenVerify,
+  mw.adminVerify,
+  (req, res) => {
+    const newKid = req.body;
 
-  db.addKid(newKid)
-    .then(kid => {
-      res.status(200).json(kid);
-    })
-    .catch(error => {
-      res.status(500).json({
-        error: error,
-        message: "There was a 500 server error while posting kids"
+    db.addKid(newKid)
+      .then(kid => {
+        res.status(200).json(kid);
+      })
+      .catch(error => {
+        res.status(500).json({
+          error: error,
+          message: "There was a 500 server error while posting kids"
+        });
       });
-    });
-});
+  }
+);
 
 //GET KID ID
 router.get("/kids/:id", mw.tokenVerify, (req, res) => {
@@ -141,6 +156,22 @@ router.get("/kids/:id", mw.tokenVerify, (req, res) => {
   db.getKid(id)
     .then(kids => {
       res.status(200).json(kids);
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: error,
+        message: "There was a 500 server error while getting kid id"
+      });
+    });
+});
+
+//REMOVES KID
+router.delete("/kids/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
+  const id = req.params.id;
+
+  db.deleteKid(id)
+    .then(deletedKid => {
+      res.status(200).json(deletedKid);
     })
     .catch(error => {
       res.status(500).json({
