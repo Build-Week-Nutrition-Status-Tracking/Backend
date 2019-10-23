@@ -9,7 +9,7 @@ module.exports = {
 
 function tokenVerify(req, res, next) {
   const token = req.headers.authorization;
-
+  console.log(req.body);
   if (token) {
     jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
       if (err) {
@@ -38,8 +38,8 @@ function adminVerify(req, res, next) {
 
 //WORK ON THIS --- HOW TO GET THE RESPONSES COUNTRY ID
 function userCountryVerify(req, res, next) {
-  console.log(req.user.user_country_id, req);
-  if (req.user.user_country_id === req.user.user_country_id) {
+  console.log(req.user.user_country_id, req.params);
+  if (req.user.user_country_id === req.params.country_id) {
     next();
   } else {
     res.status(401).json({
