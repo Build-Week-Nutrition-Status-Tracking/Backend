@@ -1,9 +1,4 @@
 // Update with your config settings.
-
-// const productionConnection =
-//   process.env.DATABASE_URL ||
-//   `postgres://localhost/connorholly/nutrition-tracker`;
-
 require("dotenv").config();
 const pg = require("pg");
 pg.defaults.ssl = true;
@@ -42,7 +37,8 @@ module.exports = {
   },
   production: {
     client: "sqlite3",
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL || process.env.CONNOR_DB,
+    useNullAsDefault: true,
     migrations: {
       directory: "./data/migrations"
     },
