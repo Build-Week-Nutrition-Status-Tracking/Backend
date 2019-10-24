@@ -18,6 +18,7 @@ router.post("/register", (req, res) => {
   if (user.username && user.password) {
     db.addUser(user)
       .then(newUser => {
+        console.log(newUser);
         res.status(200).json(newUser);
       })
       .catch(error => {
@@ -33,7 +34,7 @@ router.post("/register", (req, res) => {
 
 //work on login
 router.post("/login", (req, res) => {
-  const { username, password, admin } = req.body;
+  const { username, password } = req.body;
 
   db.findByUsername({ username })
     .first()

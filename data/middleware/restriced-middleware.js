@@ -38,8 +38,8 @@ function adminVerify(req, res, next) {
 
 //WORK ON THIS --- HOW TO GET THE RESPONSES COUNTRY ID
 function userCountryVerify(req, res, next) {
-  console.log(req.user.user_country_id, req.params);
-  if (req.user.user_country_id === req.params.country_id) {
+  console.log(req.user.user_country_id, req.params.id);
+  if (req.user.user_country_id === parseInt(req.params.id)) {
     next();
   } else {
     res.status(401).json({
