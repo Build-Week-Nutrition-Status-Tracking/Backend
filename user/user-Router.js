@@ -32,7 +32,6 @@ router.post("/register", (req, res) => {
   }
 });
 
-//work on login
 router.post("/login", (req, res) => {
   const { username, password } = req.body;
 
@@ -52,7 +51,6 @@ router.post("/login", (req, res) => {
     });
 });
 
-//WILL NEED AUTHENTICATION MIDDLEWARE FOR THESE
 router.get("/", mw.tokenVerify, mw.adminVerify, (req, res) => {
   db.getUsers()
     .then(users => {
@@ -87,7 +85,6 @@ router.get("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
     });
 });
 
-//---------------------- WORK ON THIS ---------------
 router.put("/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
   const id = req.params.id;
   const changes = req.body;
