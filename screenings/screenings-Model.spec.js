@@ -50,4 +50,45 @@ describe("kid model", () => {
     await db("kids");
     expect(kids).toHaveLength(0);
   });
+
+  it("should add a kid", async () => {
+    let kids = await db("kids");
+    expect(kids).toHaveLength(0);
+    await Model.addKid({
+      community_id: 1,
+      country_id: 2,
+      child_name: "abc",
+      parent_name: "abc123",
+      contact_info: "as;lfkjw",
+      date_of_screening: "1/2/3",
+      date_of_birth: "1/22/33",
+      gender: "male",
+      height: 1,
+      weight: 2
+    });
+    kids = await db("kids");
+    expect(kids).toHaveLength(1);
+  });
+
+  it("should delete a kid", async () => {
+    let kids = await db("kids");
+    expect(kids).toHaveLength(0);
+    await Model.addKid({
+      community_id: 1,
+      country_id: 2,
+      child_name: "abc",
+      parent_name: "abc123",
+      contact_info: "as;lfkjw",
+      date_of_screening: "1/2/3",
+      date_of_birth: "1/22/33",
+      gender: "male",
+      height: 1,
+      weight: 2
+    });
+    kids = await db("kids");
+    expect(kids).toHaveLength(1);
+    await Model.deleteKid((id = 1));
+    kids = await db("kids");
+    expect(kids).toHaveLength(0);
+  });
 });
