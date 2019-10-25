@@ -81,6 +81,12 @@ function addKid(newKid) {
 //     .where("kids.community_id", "=", communityID);
 // }
 
+function editKid(id, changes) {
+  return db("kids")
+    .where({ id })
+    .update(changes);
+}
+
 function deleteKid(id) {
   return db("kids")
     .where("id", "=", id)

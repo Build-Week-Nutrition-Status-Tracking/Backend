@@ -4,10 +4,6 @@ const mw = require("../data/middleware/restriced-middleware");
 
 const router = express.Router();
 
-//WILL NEED ADMIN, USER, AND TOKEN VERIFICATION ON ALL POSTS AND PUTS
-
-//POSSIBLY MAKE A DELETE CHILDREN.ID OPTIONAL FOR ADMIN
-
 //GET COUNTRIES
 router.get("/country", mw.tokenVerify, (req, res) => {
   db.getCountries()
@@ -175,6 +171,22 @@ router.get("/kids/:id", mw.tokenVerify, (req, res) => {
       res.status(500).json({
         error: error,
         message: "There was a 500 server error while getting kid id"
+      });
+    });
+});
+
+router.put("/kids/:id", mw.tokenVerify, (req, res) => {
+  const id = req.params.id;
+  const changes = req.body;
+
+  db.editKid(id, changes)
+    .then(updated => {
+      res.status(200).json(updated);
+    })
+    .catch(error => {
+      res.status(500).json({
+        error: error,
+        message: "There was a 500 server error while updating kid id"
       });
     });
 });
