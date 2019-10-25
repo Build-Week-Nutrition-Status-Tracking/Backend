@@ -70,7 +70,7 @@ router.get("/country/:id/communities", mw.tokenVerify, (req, res) => {
 router.post(
   "/country/:id/communities",
   mw.tokenVerify,
-  mw.adminVerify,
+  mw.adminVerify || mw.userCountryVerify,
   (req, res) => {
     const newCommunity = req.body;
 
@@ -142,7 +142,7 @@ router.get("/communities/:id/kids", mw.tokenVerify, (req, res) => {
 router.post(
   "communities/:id/kids",
   mw.tokenVerify,
-  mw.adminVerify,
+  mw.adminVerify || mw.userCountryVerify,
   (req, res) => {
     const newKid = req.body;
 
@@ -175,7 +175,8 @@ router.get("/kids/:id", mw.tokenVerify, (req, res) => {
     });
 });
 
-router.put("/kids/:id", mw.tokenVerify, (req, res) => {
+//EDITS KID
+router.put("/kids/:id", mw.tokenVerify, mw.adminVerify, (req, res) => {
   const id = req.params.id;
   const changes = req.body;
 
