@@ -73,6 +73,14 @@ function addKid(newKid) {
   return db("kids").insert(newKid);
 }
 
+// function addKid(country_id, communityID, newKid) {
+//   findAllById(country_id);
+//   return db("kids")
+//     .join("community", "kids.community_id", "=", "community.id")
+//     .insert(newKid)
+//     .where("kids.community_id", "=", communityID);
+// }
+
 function deleteKid(id) {
   return db("kids")
     .where("id", "=", id)

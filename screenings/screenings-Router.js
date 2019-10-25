@@ -123,9 +123,28 @@ router.get("/communities/:id/kids", mw.tokenVerify, (req, res) => {
     });
 });
 
+// router.get(
+//   "/country/:id/communities/:communityID/kids",
+//   mw.tokenVerify,
+//   (req, res) => {
+//     const { id, communityID } = req.params;
+
+//     db.getKids(id, communityID)
+//       .then(kids => {
+//         res.status(200).json(kids);
+//       })
+//       .catch(error => {
+//         res.status(500).json({
+//           error: error,
+//           message: "There was a 500 server error while getting kids"
+//         });
+//       });
+//   }
+// );
+
 //POSTING A NEW KID (HAVE TO ADD COUNTRY_ID AND COMMUNITY_ID)
 router.post(
-  "/communities/:id/kids",
+  "communities/:id/kids",
   mw.tokenVerify,
   mw.adminVerify,
   (req, res) => {
