@@ -140,7 +140,7 @@ router.get("/communities/:id/kids", mw.tokenVerify, (req, res) => {
 
 //POSTING A NEW KID (HAVE TO ADD COUNTRY_ID AND COMMUNITY_ID)
 router.post(
-  "communities/:id/kids",
+  "/communities/:id/kids",
   mw.tokenVerify,
   mw.adminVerify || mw.userCountryVerify,
   (req, res) => {
