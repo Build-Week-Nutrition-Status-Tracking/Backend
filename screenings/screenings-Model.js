@@ -11,6 +11,7 @@ module.exports = {
   addCountry,
   addCommunity,
   addKid,
+  editKid,
   deleteKid
 };
 
